@@ -17,6 +17,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonClicked(_ sender: UIButton) {
+        
+    
+        let operationQueue = OperationQueue()
+    let operation1 :BlockOperation = BlockOperation (block: {
+        self.makeservicecall()
+    })
+    operationQueue.addOperation(operation1)
+        
+    }
+    
+    
+
+    func makeservicecall(){
         let url = URL(string: "http://microblogging.wingnity.com/JSONParsingTutorial/jsonActors")
         
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
@@ -36,13 +49,12 @@ class ViewController: UIViewController {
                 return
             }
             self.tableArray = json
-          // print(json)
-            //print(self.tableArray![0])
+            
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "segue", sender: self)
             }
-
-}
+            
+        }
         
         task.resume()
     }
@@ -53,6 +65,8 @@ class ViewController: UIViewController {
                 let s = sender as? ViewController
                 guard let tb = s?.tableArray else { return}
                 destinationVC.tableArray = tb
+                //print(tb)
+
             }
         }
     }

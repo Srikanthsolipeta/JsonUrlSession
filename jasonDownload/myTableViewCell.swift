@@ -28,7 +28,9 @@ class myTableViewCell: UITableViewCell {
         // Initialization code
     }
     func updateCell(name:String, dob:String, image:String, height:String, desc:String, country:String) {
-        imgImage.image = UIImage(named: image)
+        let url = URL(string: image)
+        let data = try? Data(contentsOf: url!)
+        imgImage.image = UIImage(data: data!)
         nameLbl.text = name
         dobLbl.text=dob
         countryLbl.text = country
