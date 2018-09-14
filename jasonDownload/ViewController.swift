@@ -27,6 +27,18 @@ class ViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segue" {
+            if let destinationVC = segue.destination as? myViewController {
+                
+                let s = sender as? ViewController
+                guard let tb = s?.tableArray else { return}
+                destinationVC.tableArray = tb
+                //print(tb)
+                
+            }
+        }
+    }
     
 
     func makeservicecall(){
@@ -35,12 +47,12 @@ class ViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             
             guard error == nil else {
-                print("returning error")
+                //print("returning error")
                 return
             }
             
             guard let content = data else {
-                print("not returning data")
+               // print("not returning data")
                 return
             }
             
@@ -58,18 +70,7 @@ class ViewController: UIViewController {
         
         task.resume()
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segue" {
-            if let destinationVC = segue.destination as? myViewController {
-                
-                let s = sender as? ViewController
-                guard let tb = s?.tableArray else { return}
-                destinationVC.tableArray = tb
-                //print(tb)
-
-            }
-        }
-    }
+    
 
 }
 
